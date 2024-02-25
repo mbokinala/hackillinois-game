@@ -62,14 +62,7 @@ impl PlayerData {
             }
         };
 
-        match self.note_index.checked_add(1) {
-            Some(v) => {
-                self.note_index = v;
-            }
-            None => {
-                msg!("Note index reached!");
-            }
-        };
+        self.note_index += 1;
 
         self.next_note = LEVEL_ONE[self.note_index as usize];
         

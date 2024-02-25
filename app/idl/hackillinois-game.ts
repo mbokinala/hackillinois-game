@@ -84,14 +84,6 @@ export type HackillinoisGame = {
           {
             "name": "totalWoodCollected",
             "type": "u64"
-          },
-          {
-            "name": "playerRecords",
-            "type": {
-              "vec": {
-                "defined": "PlayerRecord"
-              }
-            }
           }
         ]
       }
@@ -250,14 +242,6 @@ export const IDL: HackillinoisGame = {
           {
             "name": "totalWoodCollected",
             "type": "u64"
-          },
-          {
-            "name": "playerRecords",
-            "type": {
-              "vec": {
-                "defined": "PlayerRecord"
-              }
-            }
           }
         ]
       }

@@ -1,19 +1,10 @@
 use anchor_lang::prelude::*;
-use borsh::{BorshSerialize, BorshDeserialize};
 
 use crate::constants::MAX_WOOD_PER_TREE;
-
-#[derive(BorshSerialize, BorshDeserialize, Clone)]
-pub struct PlayerRecord {
-    pub authority: Pubkey,
-    pub name: String,
-    pub note_index: u64
-}
 
 #[account]
 pub struct GameData {
     pub total_wood_collected: u64,
-    pub player_records: Vec<PlayerRecord>
 }
 
 impl GameData {

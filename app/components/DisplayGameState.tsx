@@ -10,7 +10,8 @@ const DisplayPlayerData = () => {
   const { gameState, nextEnergyIn, totalWoodAvailable, nextNote } = useGameState();
 
   useEffect(() => {
-    console.log("next note is ", gameState?.nextNote);
+    console.log("next note is ", gameState?.nextNote.map(x => x.toString()));
+    console.log("not index:", gameState?.noteIndex.toString());
   }, [gameState?.nextNote]);
 
   return (
