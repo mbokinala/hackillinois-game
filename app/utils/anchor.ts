@@ -14,7 +14,7 @@ export const METAPLEX_READAPI = "https://devnet.helius-rpc.com/?api-key=78065db3
 export const GAME_DATA_SEED = "level_2";
 
 // HackillinoisGame game program ID
-const programId = new PublicKey("J2R5PNs6N2y9FdzsYptEaH3xcCuvWzHX4kLJeisctCCz");
+const programId = new PublicKey("Fc7CuRGs32n9LAHcwBhwAGzAtr5AzfC4wVmnXCCvti8g");
 
 // Create the program interface using the idl, program ID, and provider
 export const program = new Program<HackillinoisGame>(IDL as any, programId, {

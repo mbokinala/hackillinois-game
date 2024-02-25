@@ -7,7 +7,7 @@ pub mod instructions;
 pub mod state;
 use instructions::*;
 
-declare_id!("J2R5PNs6N2y9FdzsYptEaH3xcCuvWzHX4kLJeisctCCz");
+declare_id!("Fc7CuRGs32n9LAHcwBhwAGzAtr5AzfC4wVmnXCCvti8g");
 
 #[program]
 pub mod hackillinois_game {

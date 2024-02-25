@@ -64,6 +64,10 @@ impl PlayerData {
 
         self.note_index += 1;
 
+        if self.note_index as usize >= LEVEL_ONE.len() {
+            self.note_index = 0;
+        }
+
         self.next_note = LEVEL_ONE[self.note_index as usize];
         
         match self.energy.checked_sub(amount) {

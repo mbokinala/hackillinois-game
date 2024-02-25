@@ -1,23 +1,35 @@
-import Image from "next/image"
-import { useCallback, useState } from "react"
-import { Button, HStack, VStack } from "@chakra-ui/react"
-import { useConnection, useWallet } from "@solana/wallet-adapter-react"
-import { useSessionWallet } from "@magicblock-labs/gum-react-sdk"
-import { useGameState } from "@/contexts/GameStateProvider"
-import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor"
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import { Button, HStack, VStack } from "@chakra-ui/react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { useSessionWallet } from "@magicblock-labs/gum-react-sdk";
+import { useGameState } from "@/contexts/GameStateProvider";
+import { GAME_DATA_SEED, gameDataPDA, program } from "@/utils/anchor";
 
-const ChopTreeButton = () => {
-  const { publicKey, sendTransaction } = useWallet()
-  const { connection } = useConnection()
-  const sessionWallet = useSessionWallet()
-  const { gameState, playerDataPDA } = useGameState()
-  const [isLoadingSession, setIsLoadingSession] = useState(false)
-  const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false)
-  const [transactionCounter, setTransactionCounter] = useState(0)
+declare global {
+  interface Window {
+    clickButton: (x: number, y: number) => void;
+  }
+}
+
+const ChopTreeButton = ({ onStartSession }: { onStartSession: () => any }) => {
+  const { publicKey, sendTransaction } = useWallet();
+  const { connection } = useConnection();
+  const sessionWallet = useSessionWallet();
+  const { gameState, playerDataPDA } = useGameState();
+  const [isLoadingSession, setIsLoadingSession] = useState(false);
+  const [isLoadingMainWallet, setIsLoadingMainWallet] = useState(false);
+  const [transactionCounter, setTransactionCounter] = useState(0);
+
+  useEffect(() => {
+    window.clickButton = function (tileIndex) {
+      onChopClick();
+    };
+  });
 
   const onChopClick = useCallback(async () => {
-    setIsLoadingSession(true)
-    if (!playerDataPDA || !sessionWallet) return
+    setIsLoadingSession(true);
+    if (!playerDataPDA || !sessionWallet) return;
     setTransactionCounter(transactionCounter + 1);
 
     try {
@@ -29,26 +41,27 @@ const ChopTreeButton = () => {
           signer: sessionWallet.publicKey!,
           sessionToken: sessionWallet.sessionToken,
         })
-        .transaction()
+        .transaction();
 
-      const txids = await sessionWallet.signAndSendTransaction!(transaction)
+      const txids = await sessionWallet.signAndSendTransaction!(transaction);
 
       if (txids && txids.length > 0) {
-        console.log("Transaction sent:", txids)
+        console.log("Transaction sent:", txids);
       } else {
-        console.error("Failed to send transaction")
+        console.error("Failed to send transaction");
       }
     } catch (error: any) {
-      console.log("error", `Chopping failed! ${error?.message}`)
+      console.log("error", `Chopping failed! ${error?.message}`);
     } finally {
-      setIsLoadingSession(false)
+      setIsLoadingSession(false);
+      onStartSession();
     }
-  }, [sessionWallet])
+  }, [sessionWallet]);
 
   const onChopMainWalletClick = useCallback(async () => {
-    if (!publicKey || !playerDataPDA) return
+    if (!publicKey || !playerDataPDA) return;
 
-    setIsLoadingMainWallet(true)
+    setIsLoadingMainWallet(true);
 
     try {
       const transaction = await program.methods
@@ -59,24 +72,23 @@ const ChopTreeButton = () => {
           signer: publicKey,
           sessionToken: null,
         })
-        .transaction()
+        .transaction();
 
       const txSig = await sendTransaction(transaction, connection, {
         skipPreflight: true,
-      })
-      console.log(`https://explorer.solana.com/tx/${txSig}?cluster=devnet`)
+      });
+      console.log(`https://explorer.solana.com/tx/${txSig}?cluster=devnet`);
     } catch (error: any) {
-      console.log("error", `Chopping failed! ${error?.message}`)
+      console.log("error", `Chopping failed! ${error?.message}`);
     } finally {
-      setIsLoadingMainWallet(false)
+      setIsLoadingMainWallet(false);
     }
-  }, [publicKey, playerDataPDA, connection])
+  }, [publicKey, playerDataPDA, connection]);
 
   return (
     <>
       {publicKey && gameState && (
         <VStack>
-          <Image src="/Beaver.png" alt="Energy Icon" width={64} height={64} />
           <HStack>
             {sessionWallet && sessionWallet.sessionToken != null && (
               <Button
@@ -84,21 +96,14 @@ const ChopTreeButton = () => {
                 onClick={onChopClick}
                 width="175px"
               >
-                Chop tree Session
+                Start Session
               </Button>
             )}
-            <Button
-              isLoading={isLoadingMainWallet}
-              onClick={onChopMainWalletClick}
-              width="175px"
-            >
-              Chop tree MainWallet
-            </Button>
           </HStack>
         </VStack>
       )}
     </>
-  )
-}
+  );
+};
 
-export default ChopTreeButton
+export default ChopTreeButton;
