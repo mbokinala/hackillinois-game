@@ -21,7 +21,7 @@ export default function Home() {
         <WalletMultiButton />
       </Flex>
       <VStack>
-        <Heading>Blockchain Beats</Heading>
+        <Heading>Sol Symphony</Heading>
         {!publicKey && <Text>Connect to devnet wallet!</Text>}
         <DisplayGameState />
         <InitPlayerButton />
