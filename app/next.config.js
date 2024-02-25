@@ -11,6 +11,14 @@ const nextConfig = {
       },
     ],
   },
+  rewrites: () => {
+    return [
+      {
+        source: '/game',
+        destination: '/game.html',
+      },
+    ]
+  },
 };
- 
+
 module.exports = nextConfig

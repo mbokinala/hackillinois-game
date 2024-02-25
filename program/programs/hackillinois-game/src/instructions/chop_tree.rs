@@ -8,19 +8,12 @@ pub fn chop_tree(mut ctx: Context<ChopTree>, counter: u16, amount: u64) -> Resul
     let account: &mut &mut ChopTree<'_> = &mut ctx.accounts;
     account.player.update_energy()?;
     account.player.print()?;
-
-    if account.player.energy < amount {
-        return err!(GameErrorCode::NotEnoughEnergy);
-    }
-
     account.player.last_id = counter;
     account.player.chop_tree(amount)?;
     account.game_data.on_tree_chopped(amount)?;
 
     msg!(
-        "You chopped a tree and got 1 wood. You have {} wood and {} energy left.",
-        ctx.accounts.player.wood,
-        ctx.accounts.player.energy
+        "note pressed"
     );
     Ok(())
 }

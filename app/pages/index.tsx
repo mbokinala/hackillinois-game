@@ -46,7 +46,7 @@ export default function Home() {
           >
             <iframe
               style={{ width: "30%", height: "100vh" }}
-              src={`index.html`}
+              src={`game`}
             ></iframe>
           </div>
         )}

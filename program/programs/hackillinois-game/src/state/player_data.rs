@@ -9,7 +9,7 @@ pub struct PlayerData {
     pub xp: u64,
     pub wood: u64,
     pub note_index: u64,
-    pub next_note: [u64;2],
+    pub next_note: [u64; 2],
     pub energy: u64,
     pub last_login: i64,
     pub last_id: u16,
@@ -19,10 +19,8 @@ impl PlayerData {
     pub fn print(&mut self) -> Result<()> {
         // Note that logging costs a lot of compute. So don't use it too much.
         msg!(
-            "Authority: {} Wood: {} Energy: {}",
+            "Authority: {}",
             self.authority,
-            self.wood,
-            self.energy
         );
         Ok(())
     }
@@ -62,14 +60,21 @@ impl PlayerData {
             }
         };
 
-        self.note_index += 1;
+        match self.note_index.checked_add(1) {
+            Some(v) => {
+                self.note_index = v;
+            }
+            None => {
+                msg!("Total wood reached!");
+            }
+        };
 
-        if self.note_index as usize >= LEVEL_ONE.len() {
+        if self.note_index as usize >= 117 {
             self.note_index = 0;
         }
 
         self.next_note = LEVEL_ONE[self.note_index as usize];
-        
+
         match self.energy.checked_sub(amount) {
             Some(v) => {
                 self.energy = v;

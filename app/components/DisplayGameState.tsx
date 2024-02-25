@@ -17,11 +17,11 @@ const DisplayPlayerData = () => {
     useGameState();
 
   useEffect(() => {
-    console.log("nextNote", gameState?.nextNote);
+    // console.log("nextNote", gameState?.nextNote);
     window.nextNote = gameState?.nextNote.map((x) =>
       Number.parseInt(x.toString())
     ) ?? [0, 0];
-    console.log("window nextnote", window.nextNote);
+    // console.log("window nextnote", window.nextNote);
   }, [gameState?.nextNote]);
 
   return (

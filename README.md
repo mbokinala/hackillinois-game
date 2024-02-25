@@ -179,7 +179,7 @@ Then whenever the player calls the chop_tree instruction we will check if the pl
 
         ctx.accounts.player.wood = ctx.accounts.player.wood + 1;
         ctx.accounts.player.energy = ctx.accounts.player.energy - 1;
-        msg!("You chopped a tree and got 1 log. You have {} wood and {} energy left.", ctx.accounts.player.wood, ctx.accounts.player.energy);
+        // msg!("You chopped a tree and got 1 log. You have {} wood and {} energy left.", ctx.accounts.player.wood, ctx.accounts.player.energy);
         Ok(())
     }
 ```

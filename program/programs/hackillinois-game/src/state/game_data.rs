@@ -13,14 +13,13 @@ impl GameData {
             Some(v) => {
                 if self.total_wood_collected >= MAX_WOOD_PER_TREE {
                     self.total_wood_collected = 0;
-                    msg!("Tree successfully chopped. New Tree coming up.");
+                    // msg!("Tree successfully chopped. New Tree coming up.");
                 } else {
                     self.total_wood_collected = v;
-                    msg!("Total wood chopped: {}", v);
                 }
             }
             None => {
-                msg!("The ever tree is completly chopped!");
+                // msg!("The ever tree is completly chopped!");
             }
         };
 

@@ -54,7 +54,6 @@ const ChopTreeButton = ({ onStartSession }: { onStartSession: () => any }) => {
       console.log("error", `Chopping failed! ${error?.message}`);
     } finally {
       setIsLoadingSession(false);
-      onStartSession();
     }
   }, [sessionWallet]);
 
@@ -89,16 +88,24 @@ const ChopTreeButton = ({ onStartSession }: { onStartSession: () => any }) => {
     <>
       {publicKey && gameState && (
         <VStack>
+          {/* <Image src="/Beaver.png" alt="Energy Icon" width={64} height={64} /> */}
           <HStack>
-            {sessionWallet && sessionWallet.sessionToken != null && (
+            {/* {sessionWallet && sessionWallet.sessionToken != null && (
               <Button
                 isLoading={isLoadingSession}
                 onClick={onChopClick}
                 width="175px"
               >
-                Start Session
+                Chop tree Session
               </Button>
-            )}
+            )} */}
+            {/* <Button
+              isLoading={isLoadingMainWallet}
+              onClick={onChopMainWalletClick}
+              width="175px"
+            >
+              Chop tree MainWallet
+            </Button> */}
           </HStack>
         </VStack>
       )}
